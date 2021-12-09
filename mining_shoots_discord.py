@@ -13,7 +13,7 @@ SKRIPTPFAD = pathlib.Path(__file__).parent
 CONFIGPFAD = SKRIPTPFAD / "config.toml"
 CONFIG = toml.load(CONFIGPFAD)
 
-bot = commands.Bot(command_prefix="/")
+bot = commands.Bot(command_prefix="!")
 
 db.DB_PROXY.initialize(SqliteDatabase(SKRIPTPFAD / "mining_shoots.db3"))
 db.create_tables()
