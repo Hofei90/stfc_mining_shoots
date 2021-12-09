@@ -5,7 +5,7 @@ pic = "kuchen.jpg"
 nicht_registiert = "User ist nicht registiert, Befehl /reg ausführen und Zustimmung erforderlich"
 
 [texte.dia]
-help = "Erstellt wirklich nur ein Kuchendiagramm"
+help = "Generiert ein Kuchendiagramm, gruppiert nach Allianzen"
 brief = "Erstellt ein Kuchendiagramm"
 
 [texte.uca]
