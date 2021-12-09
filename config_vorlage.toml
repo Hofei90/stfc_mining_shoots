@@ -1,0 +1,49 @@
+token = "<token>"
+pic = "kuchen.jpg"
+
+[texte]
+nicht_registiert = "User ist nicht registiert, Befehl /reg ausführen und Zustimmung erforderlich"
+
+[texte.dia]
+help = "Erstellt wirklich nur ein Kuchendiagramm"
+brief = "Erstellt ein Kuchendiagramm"
+
+[texte.uca]
+help = "Abschüsse gruppiert nach Allianzen in Textform - aktuell nichts weiter zu wissen"
+brief = "Abschüsse gruppiert nach Allianzen in Textform"
+
+[texte.ucp]
+help = "Abschüsse gelistet nach Angreifern, sortiert nach der Häufigkeit - aktuell nichts weiter zu wissen"
+brief = "Abschüsse gelistet nach Angreifern"
+
+[texte.uc]
+help = """
+Zum Eintragen der UC Mining Abschüsse im folgenden möglichen Format:
+Datum(TT.MM.JJJJ) Allianztag Spielername
+oder aber nur mit 2 Argumenten, dann wird das Datum automatisch eingetragen
+Allianztag Spielername
+Die Argumente sind immer durch ein Leerzeichen zu trennen. Allianztags werden immer alles in Großbuchstaben gespeichert.
+Spielernamen werden immer komplett klein abgespeichert.
+"""
+brief = "Zum Eintragen der UC Mining Abschüsse"
+
+[texte.reg]
+help = """Holt die Zustimmung des Users zur Speicherung seiner Daten ein. Notwändig um den Bot benutzen zu können"""
+brief = "Userregestrierung - notwendig um Bot verwenden zu können"
+zustimmung_text = """
+Beim Verwenden des Bots werden  die vom Benutzer gemachten Eintragungen in einer zum Bot zugehörigen Datenbank
+gespeichert. Zusätzlich wird die eindeutige Discord User ID und der registrierte User Name (nicht der Anzeigename)
+gespeichert.
+Mit der Speicherung der oben genannten Daten bin ich ausdrücklich einverstanden!
+Mir ist bewusst, dass auch weitere Daten wie in diesem Link
+(https://discordpy.readthedocs.io/en/stable/api.html#discord.Member) zu meinem Account theoretisch erfasst werden
+können.
+Bist du mit den oben genannten Aufführungen einverstanden, so antworte dem Bot mit: ja ich stimme zu!
+"""
+zustimmung_antwort = "ja ich stimme zu!"
+
+[texte.del]
+help = "Löscht einen Registrierten User. All seine Einträge werden mit einem unbekannter User ersetzt"
+brief = "Löschen der Zustimmung"
+text = "Die Zustimmung wird gelöscht und alle Einträge werden durch einen unbekannten User ersetzt. Fortfahren? ja/nein"
+antworten = ["ja", "nein"]
