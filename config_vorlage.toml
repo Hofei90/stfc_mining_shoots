@@ -38,9 +38,9 @@ Mit der Speicherung der oben genannten Daten bin ich ausdrücklich einverstanden
 Mir ist bewusst, dass auch weitere Daten wie in diesem Link
 (https://discordpy.readthedocs.io/en/stable/api.html#discord.Member) zu meinem Account theoretisch erfasst werden
 können.
-Bist du mit den oben genannten Aufführungen einverstanden, so antworte dem Bot mit: ja ich stimme zu!
+Bist du mit den oben genannten Aufführungen einverstanden, so antworte dem Bot mit: ja ich stimme zu
 """
-zustimmung_antwort = "ja ich stimme zu!"
+zustimmung_antwort = "ja ich stimme zu"
 
 [texte.del]
 help = "Löscht einen Registrierten User. All seine Einträge werden mit einem unbekannter User ersetzt"
