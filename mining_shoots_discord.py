@@ -10,8 +10,8 @@ import matplotlib.pyplot as plt
 import asyncio
 
 SKRIPTPFAD = pathlib.Path(__file__).parent
-CONFIGPFAD = SKRIPTPFAD / "config.toml"
-CONFIG = toml.load(CONFIGPFAD)
+CONFIG = toml.load(SKRIPTPFAD / "config.toml")
+CONFIG.update(toml.load(SKRIPTPFAD / "texte.toml"))
 
 bot = commands.Bot(command_prefix="!")
 
@@ -77,12 +77,32 @@ def schreibe_in_datenbank(daten):
 
 
 def load_players():
-    query = db.UCShoots.raw("select enemy, allianz, count(enemy) as cenemy from ucshoots group by enemy")
+    query = (db.UCShoots
+             .select(db.UCShoots, fn.COUNT(db.UCShoots.enemy).alias("enemy_count"))
+             .group_by(db.UCShoots.enemy))
+    return query
+
+
+def load_players_time(tage=60):
+    query = (db.UCShoots
+             .select(db.UCShoots, fn.COUNT(db.UCShoots.enemy).alias("enemy_count"))
+             .group_by(db.UCShoots.enemy)
+             .where(db.UCShoots.date >= datetime.date.today() - datetime.timedelta(days=tage)))
     return query
 
 
 def load_allys():
-    query = db.UCShoots.raw("select allianz, count(enemy) as cenemy from ucshoots group by allianz")
+    query = (db.UCShoots
+             .select(db.UCShoots, fn.COUNT(db.UCShoots.enemy).alias("enemy_count"))
+             .group_by(db.UCShoots.allianz))
+    return query
+
+
+def load_allys_time(tage=60):
+    query = (db.UCShoots
+             .select(db.UCShoots, fn.COUNT(db.UCShoots.enemy).alias("enemy_count"))
+             .group_by(db.UCShoots.allianz)
+             .where(db.UCShoots.date >= datetime.date.today() - datetime.timedelta(days=tage)))
     return query
 
 
@@ -142,15 +162,30 @@ async def user_loeschen(ctx):
 @bot.command(name="dia",
              help=CONFIG["texte"]["dia"]["help"],
              brief=CONFIG["texte"]["dia"]["brief"])
-async def kuchen_backen(ctx):
+async def kuchen_backen(ctx, *args):
     user = check_user(ctx.author.id)
     if user is not None:
         labels = []
         values = []
-        query = load_allys()
-        for datum in query:
+        if args:
+            if args[0] == "all":
+                player_stat = load_allys()
+            else:
+                try:
+                    tage = int(args[0])
+                except ValueError:
+                    await ctx.send("Nur Zahlen senden")
+                    return
+                else:
+                    player_stat = load_allys_time(tage)
+        else:
+            player_stat = load_allys_time()
+        if not player_stat:
+            await ctx.send("Keine Einträge vorhanden")
+            return
+        for datum in player_stat:
             labels.append(datum.allianz)
-            values.append(datum.cenemy)
+            values.append(datum.enemy_count)
         fig1, ax1 = plt.subplots()
         ax1.pie(values, labels=labels, autopct='%1.1f%%')
         ax1.axis('equal')
@@ -164,16 +199,31 @@ async def kuchen_backen(ctx):
 @bot.command(name="uca",
              help=CONFIG["texte"]["uca"]["help"],
              brief=CONFIG["texte"]["uca"]["brief"])
-async def show_player_stat(ctx):
+async def show_ally_stat(ctx, *args):
     user = check_user(ctx.author.id)
     if user is not None:
-        player_stat = load_allys()
-        await ctx.send(
-            "\n".join(
-                f"{datum.allianz}: {datum.cenemy}"
-                for datum in player_stat
+        if args:
+            if args[0] == "all":
+                player_stat = load_allys()
+            else:
+                try:
+                    tage = int(args[0])
+                except ValueError:
+                    await ctx.send("Nur Zahlen senden")
+                    return
+                else:
+                    player_stat = load_allys_time(tage)
+        else:
+            player_stat = load_allys_time()
+        if player_stat:
+            await ctx.send(
+                "\n".join(
+                    f"{datum.allianz}: {datum.enemy_count}"
+                    for datum in player_stat
+                )
             )
-        )
+        else:
+            await ctx.send("Keine Einträge vorhanden")
     else:
         await ctx.send(CONFIG["texte"]["nicht_registiert"])
 
@@ -181,16 +231,31 @@ async def show_player_stat(ctx):
 @bot.command(name="ucp",
              help=CONFIG["texte"]["ucp"]["help"],
              brief=CONFIG["texte"]["ucp"]["brief"])
-async def show_player_stat(ctx):
+async def show_player_stat(ctx, *args):
     user = check_user(ctx.author.id)
     if user is not None:
-        player_stat = load_players()
-        await ctx.send(
-            "\n".join(
-                f"[{datum.allianz}]{datum.enemy}: {datum.cenemy}"
-                for datum in player_stat
+        if args:
+            if args[0] == "all":
+                player_stat = load_players()
+            else:
+                try:
+                    tage = int(args[0])
+                except ValueError:
+                    await ctx.send("Nur Zahlen senden")
+                    return
+                else:
+                    player_stat = load_players_time(tage)
+        else:
+            player_stat = load_players_time()
+        if player_stat:
+            await ctx.send(
+                "\n".join(
+                    f"[{datum.allianz}]{datum.enemy}: {datum.enemy_count}"
+                    for datum in player_stat
+                )
             )
-        )
+        else:
+            await ctx.send("Keine Einträge vorhanden")
     else:
         await ctx.send(CONFIG["texte"]["nicht_registiert"])
 
