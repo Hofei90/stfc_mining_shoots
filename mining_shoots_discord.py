@@ -233,6 +233,7 @@ async def show_ally_stat(ctx, *args):
              brief=CONFIG["texte"]["ucp"]["brief"])
 async def show_player_stat(ctx, *args):
     user = check_user(ctx.author.id)
+    print(user)
     if user is not None:
         if args:
             if args[0] == "all":
@@ -279,6 +280,5 @@ async def add_uc_shoot(ctx, *args):
     else:
         await ctx.send(CONFIG["texte"]["nicht_registiert"])
 
-
-bot.run(CONFIG["token"])
-
+if __name__ == "__main__":
+    bot.run(CONFIG["token"])

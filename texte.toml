@@ -44,3 +44,38 @@ help = "Löscht einen Registrierten User. All seine Einträge werden mit einem u
 brief = "Löschen der Zustimmung"
 text = "Die Zustimmung wird gelöscht und alle Einträge werden durch einen unbekannten User ersetzt. Fortfahren? ja/nein"
 antworten = ["ja", "nein"]
+
+[bot_first_text]
+text = """
+**stfc_mining_shoots Bot**
+**Welchen Zweck erfüllt der Bot?**
+Der Bot nimmt UC Mining Abschüsse entgegen und erstellt darüber Statistiken und Grafiken, welche Spieler und Allianzen
+die UC Abschüsse begehen.
+
+**Befehlsübersicht**
+del: Löschen der Zustimmung
+dia:  Erstellt ein Kuchendiagramm
+reg:  Userregestrierung - notwendig um Bot verwenden zu können
+uc :  Zum Eintragen der UC Mining Abschüsse
+uca: Abschüsse gruppiert nach Allianzen in Textform
+ucp: Abschüsse gelistet nach Angreifern
+
+Um die oben aufgeführten Befehle nutzen zu können muss ein ! davor gestellt werden.
+Die Befehle werden in Discord mit dem Befehl !help angezeigt.
+Eine Detailierte Hilfe in Discord wird mit dem Befehl '!help befehl' angzeigt.
+
+**Vorgehensweise**
+Damit der Bot genutzt werden kann muss zunächst der Registrierungsbefehl ausgeführt werden mit !reg und anschließend
+eine Zustimmung erfolgen.
+Anschließend ist es möglich Abschüsse einzutragen und Statistiken anzuzeigen.
+Eintragungen werden vorgenommen mit dem Befehl:
+!uc Allianztag Spielername
+z.B:
+!uc abc maxusternann
+
+Die Statistiken können mit den Befehlen !uca, !ucp und !dia angezeigt werden.
+Der Bot funktioniert nur im Kanal UC-Abschüsse.
+
+*Dieser Kanal wird täglich um 12 Uhr geleert*
+
+Viel Spaß mit dem Bot!"""
