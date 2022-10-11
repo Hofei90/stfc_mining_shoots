@@ -1,0 +1,13 @@
+# Pfad zum speichern: /etc/systemd/system/stfc_mining_shoots.service
+[Unit]
+Description=Service Unit zum Starten des Discord STFC Mining Shootsbots
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /home/pi/stfc_mining_shoots/mining_shoots_discord.py
+User=pi
+
+
+[Install]
+WantedBy=multi-user.target
