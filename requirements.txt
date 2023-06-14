@@ -1,4 +1,4 @@
 peewee~=3.14.8
 toml~=0.10.2
-discord.py
+discord.py ~=1.7.3
 matplotlib~=3.5.0
